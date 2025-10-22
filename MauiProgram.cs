@@ -18,7 +18,10 @@ namespace DatabaseApp
                 });
 
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "app.db3");
-            builder.Services.AddSingleton(new DatabaseService(dbPath));
+            var dbService = new DatabaseService(dbPath);
+            Task.Run(async () => await dbService.InitializeAsync()).Wait();
+
+            builder.Services.AddSingleton(dbService);
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<UserListViewModel>();

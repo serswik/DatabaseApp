@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace DatabaseApp
+﻿namespace DatabaseApp
 {
     public partial class App : Application
     {

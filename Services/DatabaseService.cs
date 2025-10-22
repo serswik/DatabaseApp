@@ -10,7 +10,11 @@ namespace DatabaseApp.Services
         public DatabaseService(string dbPath)
         {
             _db = new SQLiteAsyncConnection(dbPath);
-            _db.CreateTableAsync<User>().Wait();
+        }
+
+        public async Task InitializeAsync()
+        {
+           await _db.CreateTableAsync<User>();
         }
 
         public Task<int> AddUserAsync(User user)

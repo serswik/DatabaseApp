@@ -3,13 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DatabaseApp.UserListPage"
              Title="Users List">
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <CollectionView ItemsSource="{Binding Users}">
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="All Users"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,0,0,10"/>
+
+        <CollectionView ItemsSource="{Binding Users}"
+                        SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <HorizontalStackLayout Spacing="15">
-                        <Label Text="{Binding Name}" FontSize="16"/>
-                        <Label Text="{Binding Age}" FontSize="16"/>
+                    <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                        <Label Text="{Binding Name}" FontSize="16" VerticalOptions="Center"/>
+                        <Label Text="{Binding Age}" FontSize="16" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

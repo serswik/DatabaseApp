@@ -3,19 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DatabaseApp.MainPage">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Entry Placeholder="Enter name"
-               Text="{Binding Name}"/>
+    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <Label Text="Add New User"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
 
-        <Entry Placeholder="Enter age"
-               Text="{Binding Age}"/>
+        <Entry  Placeholder="Enter name"
+                Text="{Binding Name}"
+                FontSize="16"/>
+
+        <Entry  Placeholder="Enter age"
+                Text="{Binding Age}"
+                FontSize="16"
+                Keyboard="Numeric"/>
 
         <Button Text="Save to Database"
-                Command="{Binding SaveCommand}"/>
+                Command="{Binding SaveCommand}"
+                BackgroundColor="#2196F3"
+                TextColor="White"
+                CornerRadius="12"
+                FontAttributes="Bold"
+                HeightRequest="50"/>
 
-        <Label Text="{Binding StatusMessage}"
-               TextColor="Gray"
-               FontSize="16"/>
+        <Label  Text="{Binding StatusMessage}"
+                TextColor="Gray"
+                FontSize="16"
+                HorizontalOptions="Center"/>
     </VerticalStackLayout>
 
 </ContentPage>
