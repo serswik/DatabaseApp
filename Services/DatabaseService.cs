@@ -26,5 +26,15 @@ namespace DatabaseApp.Services
         {
             return _db.Table<User>().ToListAsync();
         }
+
+        public Task<int> DeleteUserAsync(User user)
+        {
+            return _db.DeleteAsync(user);
+        }
+
+        public Task<int> UpdateUserAsync(User user)
+        {
+            return _db.UpdateAsync(user);
+        }
     }
 }

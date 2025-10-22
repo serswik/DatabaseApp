@@ -13,16 +13,12 @@ namespace DatabaseApp.ViewModels
         private readonly DatabaseService _dbService;
 
         [ObservableProperty]
-        private ObservableCollection<User> users = new ObservableCollection<User>();
+        private ObservableCollection<User> users = new();
 
         public UserListViewModel(DatabaseService dbService)
         {
             _dbService = dbService;
             LoadUsersCommand.Execute(null);
-            WeakReferenceMessenger.Default.Register<UserAddedMessage>(this, (r, m) =>
-            {
-                Users.Add(m.User);
-            });
         }
 
         [RelayCommand]

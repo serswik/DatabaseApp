@@ -43,8 +43,6 @@ namespace DatabaseApp.ViewModels
 
             var user = new User { Name = Name, Age = Age };
             await _dbService.AddUserAsync(user);
-            
-            WeakReferenceMessenger.Default.Send(new UserAddedMessage(user));
 
             StatusMessage = $"User '{Name}' added successfully";
             Name = string.Empty;
