@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DatabaseApp.Services;
+using DatabaseApp.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace DatabaseApp
 {
@@ -15,8 +17,13 @@ namespace DatabaseApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "app.db3");
+            builder.Services.AddSingleton(new DatabaseService(dbPath));
+            builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddTransient<MainPage>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
