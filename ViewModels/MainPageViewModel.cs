@@ -1,6 +1,8 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using DatabaseApp.Messages;
 using DatabaseApp.Models;
 using DatabaseApp.Services;
 
@@ -39,9 +41,12 @@ namespace DatabaseApp.ViewModels
                 return;
             }
 
-            await _dbService.AddUserAsync(new User { Name = Name, Age = Age });
-            StatusMessage = $"User '{Name}' added successfully";
+            var user = new User { Name = Name, Age = Age };
+            await _dbService.AddUserAsync(user);
+            
+            WeakReferenceMessenger.Default.Send(new UserAddedMessage(user));
 
+            StatusMessage = $"User '{Name}' added successfully";
             Name = string.Empty;
             Age = 0;
         }
