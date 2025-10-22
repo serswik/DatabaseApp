@@ -21,6 +21,10 @@ namespace DatabaseApp
             builder.Services.AddSingleton(new DatabaseService(dbPath));
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<UserListViewModel>();
+            builder.Services.AddTransient<UserListPage>();
+            builder.Services.AddTransient<AppShell>();
+            builder.Services.AddSingleton<App>();
 
 #if DEBUG
             builder.Logging.AddDebug();
