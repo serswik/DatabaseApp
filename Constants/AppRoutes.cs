@@ -5,5 +5,6 @@ namespace DatabaseApp.Constants
     {
         public const string MainPage = "main-page";
         public const string UsersListPage = "users";
+        public const string RecentUsersPage = "recent-users";
     }
 }

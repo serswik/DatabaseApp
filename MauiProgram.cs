@@ -24,10 +24,16 @@ namespace DatabaseApp
 
             builder.Services.AddSingleton(dbService);
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+            
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<MainPage>();
+
             builder.Services.AddTransient<UserListViewModel>();
             builder.Services.AddTransient<UserListPage>();
+
+            builder.Services.AddTransient<RecentUsersViewModel>();
+            builder.Services.AddTransient<RecentUsersPage>();
+
             builder.Services.AddTransient<AppShell>();
             builder.Services.AddSingleton<App>();
 
