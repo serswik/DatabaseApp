@@ -36,5 +36,13 @@ namespace DatabaseApp.Services
         {
             return _db.UpdateAsync(user);
         }
+
+        public async Task<List<User>> GetRecentUsersAsync(int count = 5)
+        {
+            return await _db.Table<User>()
+                            .OrderByDescending(u => u.CreatedAt)
+                            .Take(count)
+                            .ToListAsync();
+        }
     }
 }
