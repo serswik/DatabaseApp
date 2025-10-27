@@ -16,6 +16,15 @@ namespace DatabaseApp.ViewModels
         [ObservableProperty]
         private ObservableCollection<User> users = new();
 
+        [ObservableProperty]
+        private string filterName;
+
+        [ObservableProperty]
+        private int? filterMinAge;
+
+        [ObservableProperty]
+        private int? filterMaxAge;
+
         public UserListViewModel(DatabaseService dbService, INavigationService navService)
         {
             _dbService = dbService;
@@ -54,6 +63,23 @@ namespace DatabaseApp.ViewModels
             };
 
             await _navService.GoToAsync(AppRoutes.MainPage, navParams);
+
+            await LoadUsersAsync();
+        }
+
+        [RelayCommand]
+        public async Task ApplyFilterAsync()
+        {
+            var filtered = await _dbService.FilterUsersAsync(FilterName, FilterMinAge, FilterMaxAge);
+            Users = new ObservableCollection<User>(filtered);
+        }
+
+        [RelayCommand]
+        public async Task ClearFilterAsync()
+        {
+            FilterName = string.Empty;
+            FilterMinAge = null;
+            FilterMaxAge = null;
 
             await LoadUsersAsync();
         }
