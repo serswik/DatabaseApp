@@ -1,23 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using DatabaseApp.Messages;
 using DatabaseApp.Models;
 using DatabaseApp.Services;
 using System.Collections.ObjectModel;
+using DatabaseApp.Interfaces;
+using DatabaseApp.Constants;
 
 namespace DatabaseApp.ViewModels
 {
     public partial class UserListViewModel : ObservableObject
     {
         private readonly DatabaseService _dbService;
+        private readonly INavigationService _navService;
 
         [ObservableProperty]
         private ObservableCollection<User> users = new();
 
-        public UserListViewModel(DatabaseService dbService)
+        public UserListViewModel(DatabaseService dbService, INavigationService navService)
         {
             _dbService = dbService;
+            _navService = navService;
             LoadUsersCommand.Execute(null);
         }
 
@@ -50,7 +52,8 @@ namespace DatabaseApp.ViewModels
             {
                 { "UserToEdit", user }
             };
-            await Shell.Current.GoToAsync("///main-page", navParams);
+
+            await _navService.GoToAsync(AppRoutes.MainPage, navParams);
 
             await LoadUsersAsync();
         }

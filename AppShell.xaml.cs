@@ -6,6 +6,9 @@
         {
             InitializeComponent();
 
+            Routing.RegisterRoute("main-page", typeof(MainPage));
+            Routing.RegisterRoute("users", typeof(UserListPage));
+
             Items.Add(new TabBar
             {
                 Items =
