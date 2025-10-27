@@ -26,15 +26,8 @@ namespace DatabaseApp.ViewModels
         {
             var list = await _dbService.GetUsersAsync();
 
-            Users.Clear();
-            foreach (var user in list)
-            {
-                if (!Users.Any(u => u.Id == user.Id))
-                {
-                    Users.Add(user);
-                }
-            }
-        }
+            Users = new ObservableCollection<User>(list);
+         }
 
         [RelayCommand]
         public async Task DeleteUserAsync(User user)
