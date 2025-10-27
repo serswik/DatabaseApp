@@ -13,16 +13,12 @@ namespace DatabaseApp.ViewModels
         private readonly DatabaseService _dbService;
 
         [ObservableProperty]
-        private ObservableCollection<User> users = new ObservableCollection<User>();
+        private ObservableCollection<User> users = new();
 
         public UserListViewModel(DatabaseService dbService)
         {
             _dbService = dbService;
             LoadUsersCommand.Execute(null);
-            WeakReferenceMessenger.Default.Register<UserAddedMessage>(this, (r, m) =>
-            {
-                Users.Add(m.User);
-            });
         }
 
         [RelayCommand]
@@ -30,13 +26,33 @@ namespace DatabaseApp.ViewModels
         {
             var list = await _dbService.GetUsersAsync();
 
-            foreach (var user in list)
+            Users = new ObservableCollection<User>(list);
+         }
+
+        [RelayCommand]
+        public async Task DeleteUserAsync(User user)
+        {
+            bool confirm = await Shell.Current.DisplayAlert(
+                "Confirm Delete",
+                $"Are you sure you want to delete {user.Name}?",
+                "Yes", "No");
+
+            if (!confirm) return;
+
+            await _dbService.DeleteUserAsync(user);
+            Users.Remove(user);
+        }
+
+        [RelayCommand]
+        public async Task EditUserAsync(User user)
+        {
+            var navParams = new Dictionary<string, object>
             {
-                if (!Users.Any(u => u.Id == user.Id))
-                {
-                    Users.Add(user);
-                }
-            }
+                { "UserToEdit", user }
+            };
+            await Shell.Current.GoToAsync("///main-page", navParams);
+
+            await LoadUsersAsync();
         }
     }
 }

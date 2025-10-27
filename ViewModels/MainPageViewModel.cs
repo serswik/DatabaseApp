@@ -8,6 +8,7 @@ using DatabaseApp.Services;
 
 namespace DatabaseApp.ViewModels
 {
+    [QueryProperty(nameof(UserToEdit), "UserToEdit")]
     public partial class MainPageViewModel : ObservableObject
     {
         private readonly DatabaseService _dbService;
@@ -21,32 +22,67 @@ namespace DatabaseApp.ViewModels
         [ObservableProperty]
         private string statusMessage;
 
+        [ObservableProperty]
+        private User userToEdit;
+
         public MainPageViewModel(DatabaseService dbService)
         {
             _dbService = dbService;
         }
 
+        partial void OnUserToEditChanged(User value)
+        {
+            if (value != null)
+            {
+                Name = value.Name;
+                Age = value.Age;
+            }
+        }
+
         [RelayCommand]
         private async Task SaveAsync()
         {
+            if (!ValidateInput()) return;
+
+            if (UserToEdit == null)
+            {
+                await _dbService.AddUserAsync(new User
+                {
+                    Name = Name,
+                    Age = Age
+                });
+                StatusMessage = $"User '{Name}' added successfully";
+            }
+            else
+            {
+                UserToEdit.Name = Name;
+                UserToEdit.Age = Age;
+                await _dbService.UpdateUserAsync(UserToEdit);
+                StatusMessage = $"User '{Name}' updated successfully";
+            }
+
+            ClearInputs();
+        }
+
+        private bool ValidateInput()
+        {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                StatusMessage = "Please enter a name";
-                return;
+                StatusMessage = "Enter name";
+                return false;
             }
 
             if (Age <= 0 || Age >= 105)
             {
-                StatusMessage = "Please enter a valid age";
-                return;
+                StatusMessage = "Enter valid age";
+                return false;
             }
 
-            var user = new User { Name = Name, Age = Age };
-            await _dbService.AddUserAsync(user);
-            
-            WeakReferenceMessenger.Default.Send(new UserAddedMessage(user));
+            return true;
+        }
 
-            StatusMessage = $"User '{Name}' added successfully";
+        private void ClearInputs()
+        {
             Name = string.Empty;
             Age = 0;
         }
