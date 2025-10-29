@@ -1,0 +1,90 @@
+﻿using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using DatabaseApp.Messages;
+using DatabaseApp.Models;
+using DatabaseApp.Services;
+
+namespace DatabaseApp.ViewModels
+{
+    [QueryProperty(nameof(UserToEdit), "UserToEdit")]
+    public partial class MainPageViewModel : ObservableObject
+    {
+        private readonly DatabaseService _dbService;
+
+        [ObservableProperty]
+        private string name;
+
+        [ObservableProperty]
+        private int age;
+
+        [ObservableProperty]
+        private string statusMessage;
+
+        [ObservableProperty]
+        private User userToEdit;
+
+        public MainPageViewModel(DatabaseService dbService)
+        {
+            _dbService = dbService;
+        }
+
+        partial void OnUserToEditChanged(User value)
+        {
+            if (value != null)
+            {
+                Name = value.Name;
+                Age = value.Age;
+            }
+        }
+
+        [RelayCommand]
+        private async Task SaveAsync()
+        {
+            if (!ValidateInput()) return;
+
+            if (UserToEdit == null)
+            {
+                await _dbService.AddUserAsync(new User
+                {
+                    Name = Name,
+                    Age = Age
+                });
+                StatusMessage = $"User '{Name}' added successfully";
+            }
+            else
+            {
+                UserToEdit.Name = Name;
+                UserToEdit.Age = Age;
+                await _dbService.UpdateUserAsync(UserToEdit);
+                StatusMessage = $"User '{Name}' updated successfully";
+            }
+
+            ClearInputs();
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                StatusMessage = "Enter name";
+                return false;
+            }
+
+            if (Age <= 0 || Age >= 105)
+            {
+                StatusMessage = "Enter valid age";
+                return false;
+            }
+
+            return true;
+        }
+
+        private void ClearInputs()
+        {
+            Name = string.Empty;
+            Age = 0;
+        }
+    }
+}
