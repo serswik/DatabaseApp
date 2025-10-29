@@ -16,18 +16,4 @@ public partial class UserListPage : ContentPage
 		base.OnAppearing();
         await _vm.LoadUsersAsync();
     }
-
-	protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        var vm = (UserListViewModel)BindingContext;
-        await vm.LoadUsersAsync();
-    }
-
-	protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        var vm = (UserListViewModel)BindingContext;
-        await vm.LoadUsersAsync();
-    }
 }
