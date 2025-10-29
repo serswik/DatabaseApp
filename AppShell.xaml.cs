@@ -1,10 +1,16 @@
-﻿namespace DatabaseApp
+﻿using DatabaseApp.Constants;
+
+namespace DatabaseApp
 {
     public partial class AppShell : Shell
     {
         public AppShell(MainPage mainPage, UserListPage usersListPage)
         {
             InitializeComponent();
+
+            Routing.RegisterRoute(AppRoutes.MainPage, typeof(MainPage));
+            Routing.RegisterRoute(AppRoutes.UsersListPage, typeof(UserListPage));
+            Routing.RegisterRoute(AppRoutes.RecentUsersPage, typeof(RecentUsersPage));
 
             Items.Add(new TabBar
             {

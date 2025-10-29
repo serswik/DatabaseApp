@@ -1,6 +1,7 @@
 ﻿using DatabaseApp.Services;
 using DatabaseApp.ViewModels;
 using Microsoft.Extensions.Logging;
+using DatabaseApp.Interfaces;
 
 namespace DatabaseApp
 {
@@ -22,10 +23,17 @@ namespace DatabaseApp
             Task.Run(async () => await dbService.InitializeAsync()).Wait();
 
             builder.Services.AddSingleton(dbService);
+            builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+            
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<MainPage>();
+
             builder.Services.AddTransient<UserListViewModel>();
             builder.Services.AddTransient<UserListPage>();
+
+            builder.Services.AddTransient<RecentUsersViewModel>();
+            builder.Services.AddTransient<RecentUsersPage>();
+
             builder.Services.AddTransient<AppShell>();
             builder.Services.AddSingleton<App>();
 
