@@ -31,7 +31,8 @@
                 FontSize="16"
                 HorizontalOptions="Center"/>
 
-        <Button Text="Show Recent Users" Command="{Binding ShowRecentUsersCommand}"/>
+        <Button Text="{Binding ShowUsersButtonText}"
+                Command="{Binding ShowRecentUsersCommand}"/>
     </VerticalStackLayout>
 
 </ContentPage>

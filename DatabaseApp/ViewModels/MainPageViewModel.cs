@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseApp.Interfaces;
 using DatabaseApp.Constants;
 using DatabaseApp.Models;
 using DatabaseApp.Services;
+using DatabaseApp.Resources.Locales;
 
 namespace DatabaseApp.ViewModels
 {
@@ -31,6 +31,8 @@ namespace DatabaseApp.ViewModels
             _dbService = dbService;
             _navService = navService;
         }
+
+        public string ShowUsersButtonText => AppResources.show_users_button;
 
         partial void OnUserToEditChanged(User value)
         {

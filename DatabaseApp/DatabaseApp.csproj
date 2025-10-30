@@ -36,6 +36,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<BaseOutputPath>C:\Users\serge\Studying\MauiLearning\DatabaseApp\DatabaseApp\bin</BaseOutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -69,6 +70,21 @@
 	  <Compile Update="MainPage.xaml.cs">
 	    <DependentUpon>MainPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Resources\Locales\AppResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppResources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Locales\AppResources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Locales\AppResources.uk.resx">
+	    <Generator></Generator>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
