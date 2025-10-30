@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using DatabaseApp.Messages;
+using DatabaseApp.Interfaces;
+using DatabaseApp.Constants;
 using DatabaseApp.Models;
 using DatabaseApp.Services;
+using DatabaseApp.Resources.Locales;
 
 namespace DatabaseApp.ViewModels
 {
@@ -12,6 +12,7 @@ namespace DatabaseApp.ViewModels
     public partial class MainPageViewModel : ObservableObject
     {
         private readonly DatabaseService _dbService;
+        private readonly INavigationService _navService;
 
         [ObservableProperty]
         private string name;
@@ -25,10 +26,13 @@ namespace DatabaseApp.ViewModels
         [ObservableProperty]
         private User userToEdit;
 
-        public MainPageViewModel(DatabaseService dbService)
+        public MainPageViewModel(DatabaseService dbService, INavigationService navService)
         {
             _dbService = dbService;
+            _navService = navService;
         }
+
+        public string ShowUsersButtonText => AppResources.show_users_button;
 
         partial void OnUserToEditChanged(User value)
         {
@@ -62,6 +66,12 @@ namespace DatabaseApp.ViewModels
             }
 
             ClearInputs();
+        }
+
+        [RelayCommand]
+        public async Task ShowRecentUsersAsync()
+        {
+            await _navService.GoToAsync(AppRoutes.RecentUsersPage);
         }
 
         private bool ValidateInput()

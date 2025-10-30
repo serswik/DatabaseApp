@@ -30,6 +30,9 @@
                 TextColor="Gray"
                 FontSize="16"
                 HorizontalOptions="Center"/>
+
+        <Button Text="{Binding ShowUsersButtonText}"
+                Command="{Binding ShowRecentUsersCommand}"/>
     </VerticalStackLayout>
 
 </ContentPage>

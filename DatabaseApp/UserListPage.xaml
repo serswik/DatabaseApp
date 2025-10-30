@@ -4,29 +4,32 @@
              xmlns:viewModels="clr-namespace:DatabaseApp.ViewModels"
              x:Class="DatabaseApp.UserListPage"
              Title="Users List">
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="All Users"
-           FontSize="24"
-           FontAttributes="Bold"
-           HorizontalOptions="Center"
-           Margin="0,0,0,10"/>
+    
+    <Grid Padding="20" RowSpacing="10" RowDefinitions="Auto,Auto,*">
+        <Entry Placeholder="Name contains..." Text="{Binding FilterName}" Grid.Row="0"/>
 
-            <CollectionView ItemsSource="{Binding Users}"
+        <HorizontalStackLayout Grid.Row="1" Spacing="10">
+            <Entry Placeholder="Min Age" Text="{Binding FilterMinAge}" Keyboard="Numeric"/>
+            <Entry Placeholder="Max Age" Text="{Binding FilterMaxAge}" Keyboard="Numeric"/>
+            <Button Text="Apply Filters" Command="{Binding ApplyFilterCommand}"/>
+            <Button Text="Clear Filters" Command="{Binding ClearFilterCommand}"/>
+        </HorizontalStackLayout>
+        
+        <CollectionView ItemsSource="{Binding Users}" Grid.Row="2"
                     SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="5">
-                            <HorizontalStackLayout Grid.Column="0" Spacing="10" VerticalOptions="Center">
-                                <Label Text="{Binding Name}" 
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,Auto,Auto" Padding="5">
+                        <HorizontalStackLayout Grid.Column="0" Spacing="10" VerticalOptions="Center">
+                            <Label Text="{Binding Name}" 
                                FontSize="16" 
                                VerticalOptions="Center"/>
-                                <Label Text="{Binding Age}" 
+                            <Label Text="{Binding Age}" 
                                FontSize="16" 
                                VerticalOptions="Center"/>
-                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
 
-                            <Button Grid.Column="1"
+                        <Button Grid.Column="1"
                             Text="✏"
                             FontSize="18"
                             BackgroundColor="Transparent"
@@ -34,18 +37,18 @@
                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:UserListViewModel}}, Path=EditUserCommand}"
                             CommandParameter="{Binding .}"/>
 
-                            <Button Grid.Column="2"
+                        <Button Grid.Column="2"
                             Text="🗑"
                             FontSize="18"
                             BackgroundColor="Transparent"
                             TextColor="#F44336"
                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:UserListViewModel}}, Path=DeleteUserCommand}"
                             CommandParameter="{Binding .}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
-    
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
 </ContentPage>
