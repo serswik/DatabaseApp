@@ -4,17 +4,10 @@ namespace DatabaseApp;
 
 public partial class RecentUsersPage : ContentPage
 {
-	private readonly RecentUsersViewModel _vm;
 
     public RecentUsersPage(RecentUsersViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext = _vm = vm;
+		BindingContext = vm;
 	}
-
-	protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        await _vm.LoadRecentUsersAsync();
-    }
 }

@@ -19,6 +19,7 @@ namespace DatabaseApp.ViewModels
         {
             _dbService = dbService;
             _navService = navService;
+            LoadRecentUsersCommand.Execute(null);
         }
 
         [RelayCommand]
