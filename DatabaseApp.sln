@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseApp.Tests", "DatabaseApp.Tests\DatabaseApp.Tests.csproj", "{CB72059C-E46F-4A05-B224-D5C76A29F4A1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B0006806-EEFE-4840-B35A-9BE0B541CA9F} = {B0006806-EEFE-4840-B35A-9BE0B541CA9F}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseApp", "DatabaseApp\DatabaseApp.csproj", "{B0006806-EEFE-4840-B35A-9BE0B541CA9F}"
 EndProject
